@@ -44,8 +44,41 @@ def env_step(state: torch.Tensor, action: int, room_size: int = 8) -> tuple[torc
     update_grid = render_observation(new_state, room_size)
     return (new_state, update_grid)
 
-# Step 6 - collect_random_transitions (not yet solved)
-# TODO: implement
+# Step 6 - collect_random_transitions
+import random
+def collect_random_transitions(num_transitions: int, room_size: int = 8, seed: int = 0) -> dict:
+    # TODO: collect a dataset of (obs, action, next_obs, state, next_state) transitions...
+    observations = torch.empty((num_transitions, 1, room_size, room_size))
+    actions = torch.empty(num_transitions, dtype=torch.long)
+    next_observations = torch.empty_like(observations)
+    states = torch.empty((num_transitions, 2))
+    next_states = torch.empty_like(states)
+
+    rng = random.Random(seed)
+    state, grid = env_reset(room_size, seed=seed)
+    
+    for i in range(num_transitions):
+        action = rng.randint(0, 3)
+        
+        update_state, update_grid = env_step(state, action, room_size)
+
+        observations[i] = grid
+        actions[i] = action
+        next_observations[i] = update_grid
+        states[i] = state
+        next_states[i] = update_state
+
+        state = update_state
+        grid = update_grid
+
+    
+    return {
+        "observations": observations,
+        "actions": actions,
+        "next_observations": next_observations,
+        "states": states,
+        "next_states": next_states
+    }
 
 # Step 7 - build_transition_dataset (not yet solved)
 # TODO: implement
