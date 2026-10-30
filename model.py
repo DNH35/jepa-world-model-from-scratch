@@ -21,8 +21,14 @@ def apply_action(state: torch.Tensor, action: int, room_size: int = 8) -> torch.
     res = state + offset
     return res.clamp(min=0, max=room_size - 1)
 
-# Step 3 - render_observation (not yet solved)
-# TODO: implement
+# Step 3 - render_observation
+def render_observation(state: torch.Tensor, room_size: int = 8) -> torch.Tensor:
+    # TODO: Render a (1, room_size, room_size) float32 obs with agent pixel 1.0...
+    state = state.to(int)
+    grid = torch.zeros((1, room_size, room_size))
+    x, y = state
+    grid[0, y, x] = 1.0
+    return grid
 
 # Step 4 - env_reset (not yet solved)
 # TODO: implement
