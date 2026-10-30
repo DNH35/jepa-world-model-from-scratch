@@ -80,8 +80,11 @@ def collect_random_transitions(num_transitions: int, room_size: int = 8, seed: i
         "next_states": next_states
     }
 
-# Step 7 - build_transition_dataset (not yet solved)
-# TODO: implement
+# Step 7 - build_transition_dataset
+def build_transition_dataset(num_transitions: int = 512, room_size: int = 8, seed: int = 0) -> dict:
+    # TODO: Build a JEPA training-ready transition dataset by collecting random transitions...
+    transitions_set = collect_random_transitions(num_transitions, room_size, seed)
+    return transitions_set
 
 # Step 8 - init_encoder_params (not yet solved)
 # TODO: implement
