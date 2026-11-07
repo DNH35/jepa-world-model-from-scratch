@@ -125,8 +125,14 @@ def init_target_encoder(encoder_params: dict) -> dict:
 
     return encoder_copy
 
-# Step 11 - ema_update (not yet solved)
-# TODO: implement
+# Step 11 - ema_update
+def ema_update(target_params: dict, encoder_params: dict, tau: float = 0.99) -> dict:
+    # TODO: Refresh target encoder params via EMA of the online encoder.
+    ema_target_params = {}
+    for k in target_params.keys():
+        ema_target_params[k] = tau * target_params[k] + (1 - tau) * encoder_params[k]
+    
+    return ema_target_params
 
 # Step 12 - encode_batch (not yet solved)
 # TODO: implement
